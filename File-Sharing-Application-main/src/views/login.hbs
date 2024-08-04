@@ -1,0 +1,108 @@
+<div class="container-md my-5">
+    <div class="btn-group">
+        <button class="btn btn-outline-primary" onclick="ChangeType(`login`)">Login</button>
+        <button class="btn btn-outline-primary" onclick="ChangeType(`signup`)">Sign up</button>
+        <button class="btn btn-outline-primary" onclick="Logout()">Logout</button>
+    </div>
+</div>
+
+<script>
+    function Logout() {
+        localStorage.removeItem('accessToken');
+    }
+</script>
+
+<div class="container-md">
+    <div class="row my-5 justify-content-center" id="login-form-container" onsubmit="SubmitLogin(event)">
+        <h1 class="fw-bold text-center">Login</h1>
+        <div class="col-12 col-md-6">
+            <form action="/auth/login" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">username</label>
+                    <input type="text" class="form-control" name="username" id="login-username"
+                        aria-describedby="username-help" placeholder="">
+                    <small id="username-help" class="form-text text-muted">Nhập Email của bạn</small>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input type="password" class="form-control" name="password" id="login-password"
+                        placeholder="password">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function SubmitLogin(event) {
+            event.preventDefault();
+            const user = {
+                username: document.getElementById("login-username").value,
+                password: document.getElementById("login-password").value
+            }
+
+            const accessToken = await fetch("/auth/login", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    username: user.username,
+                    password: user.password
+                })
+            }).then(response => response.json())
+                .then(response => response.accessToken);
+            
+            console.log(accessToken);
+            localStorage.setItem("accessToken", accessToken);
+        }
+    </script>
+
+    <div class="row my-5 justify-content-center" id="signup-form-container">
+        <h1 class="fw-bold text-center">Sign Up</h1>
+        <div class="col-12 col-md-6">
+            <form action="/auth/signup" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">username</label>
+                    <input type="text" class="form-control" name="username" id="sign-username"
+                        aria-describedby="username-help" placeholder="">
+                    <small id="username-help" class="form-text text-muted">Nhập Email của bạn</small>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input type="password" class="form-control" name="password" id="sign-password"
+                        placeholder="password">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">again password</label>
+                    <input type="password" class="form-control" id="repassword" placeholder="password">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var type = "login";
+    document.getElementById('signup-form-container').style.display = "none"
+
+    function ChangeType(_type) {
+        type = _type;
+
+        if (type === "signup") {
+            document.getElementById('login-form-container').style.display = "none";
+            document.getElementById('signup-form-container').style.display = "flex";
+        } else {
+            document.getElementById('login-form-container').style.display = "flex";
+            document.getElementById('signup-form-container').style.display = "none";
+        }
+
+        console.log(type);
+    }
+</script>

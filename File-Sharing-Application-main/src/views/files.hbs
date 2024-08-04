@@ -1,0 +1,82 @@
+<main class="container my-5">
+    <div class="row">
+        <h1 class="fs-1 fw-bold text-primary page-name" value="files">Tất cả file trong: {{page}}</h1>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-10">
+            <div class="row" style="">
+                {{#if file}}
+
+                {{#each file}}
+                <div class="col-12 col-md-6 px-4 item-show">
+                    <div class="row">
+                        <div class="item">
+                            <div class="">
+                                <h3 class="d-inline">
+                                    <a target="_blank" href="/{{this.url}}/{{this.id}}">{{this.name}}</a>
+                                </h3>
+                                <span class="d-inline">Thể loại: <a href="/files/{{this.type}}"
+                                        class="text-primary fw-bold">{{this.type}}</a></span>
+                            </div>
+                            {{#if this.description}}
+                            <div class="row mt-2">
+                                <span class=""><b>Mô tả:</b> {{this.description}}</span>
+                            </div>
+                            {{/if}}
+                            {{#if this.image}}
+                            <div class="thumbnail">
+                                <img src="{{this.url}}" alt="Image">
+                            </div>
+                            {{/if}}
+                            <div class="mt-3">
+                                <form role="form" action="/files/delete" method="POST"
+                                    onsubmit="return validateForm(event);">
+                                    <input type="hidden" name="name" value="{{this.id}}">
+                                    <input type="hidden" name="type" value="{{this.type}}">
+                                 
+                                    <input type="button" name="btn" value="Delete" id="" data-bs-toggle="modal"
+                                        data-bs-target="#modal-confirm"
+                                        class="btn btn-outline-primary btn-delete mx-auto" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+
+                {{else}}
+                <h4 class="p-4 mt-4 bg-primary bg-opacity-10 text-center rounded-2">Chưa có File nào</h4>
+                {{/if}}
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <h2>Xem thêm</h2>
+            <ul class="menu-file">
+                <li class="item-show">
+                    <a href="/files" class="menu-item"><span>Tất cả</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/study" class="menu-item"><span>Học tập</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/code" class="menu-item"><span>Code</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/de-cuong" class="menu-item"><span>Đề cương</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/slide" class="menu-item"><span>Slide bài giảng</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/tieu-luan" class="menu-item"><span>Tiểu luận</span></a>
+                </li>
+                <li class="item-show">
+                    <a href="/files/other" class="menu-item"><span>Khác</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script type="module" src="../javascript/files.js" defer></script>

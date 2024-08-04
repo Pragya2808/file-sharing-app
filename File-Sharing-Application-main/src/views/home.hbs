@@ -1,0 +1,116 @@
+<main class="container my-5">
+    <h1 class="fs-1 fw-bold text-primary page-name" value="home">Trang Chủ</h1>
+    <hr>
+
+    <div class="row mt-5">
+        <div class="col-12 col-md-6">
+            <form id="form-sharing" action="/upload" method="POST" enctype="multipart/form-data"
+                onsubmit="submitFormSharing(event)">
+                <div class="mb-4">
+                    <div class="mb-3">
+                        <label for="type" class="form-label fs-3 fw-bold">Thể loại</label>
+                        <select class="form-select form-select-lg" name="type" id="type">
+                            <option value=""=selected>--Select--</option>
+                            <option value="study">Học tập</option>
+                            <option value="slide">Slide bài giảng</option>
+                            <option value="code">Code</option>
+                            <option value="de-cuong">Đề cương</option>
+                            <option value="tieu-luan">Tiểu luận</option>
+                            <option value="other">Khác..</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="file" class="form-label fs-3 fw-bold">Chọn một File</label>
+                    <input type="hidden" name="name" id="name" value="">
+                    <input type="file" class="form-control" name="file_upload" id="file_upload" placeholder=""
+                        aria-describedby="fileHelp" onchange="checkFileValidate(event)">
+                    <div id="fileHelp" class="form-text">Có thể chia sẻ file .doc, .docx, .pptx, .cpp,...</div>
+                </div>
+                <div class="mb-4">
+                    <label for="file" class="form-label fs-3 fw-bold">Mô tả</label>
+                    <textarea type="text" class="form-control" name="description" id="description"
+                        placeholder="Nội dung file"></textarea>
+                </div>
+                <div class="mt-5 d-flex justify-content-start">
+                    <button class="btn btn-outline-primary px-5 py-2" type="submit" disabled>Share</button>
+                </div>
+            </form>
+
+            <h1 class="fs-1 fw-bold text-primary" style="margin-top: 100px;" value="contact">Về Tôi</h1>
+            <hr>
+            <div class="row">
+                <div class="heading p-3">
+                    <p style="line-height: 30px; opacity: 75%;">My full name is <b>CHU QUANG HUY</b>. I am an intern Web
+                        Developer. I have been studying at the
+                        University of Transport and Communications (Hanoi, Vietnam) since 2021. I always try hard and
+                        improve myself every day. My dream is to become a great programmer.</p>
+                    <div class="thumbnail rounded-4 overflow-hidden">
+                        <img class="w-100 h-100" src="./images/z3986264309376_f236e626b5126f7acfe6af447286eba4.jpg"
+                            alt="Harryguci" style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="menu-right" style="margin-left: 30px;">
+                <h2 class="fw-bold">File mới</h2>
+                {{#if file}}
+                <ul class="mt-3">
+
+                    {{#each file}}
+                    <li class="py-3 px-3 mb-4 bg-primary bg-opacity-10 rounded-1 position-relative item-show">
+                        <span class="badge bg-primary position-absolute fs-6"
+                            style="top: -10px; right: -10px;">New!</span>
+                        <div class="d-flex" style="justify-content: space-between;">
+                            <h4>
+                                <a target="_blank" href="{{this.url}}/{{this.id}}">
+                                    {{this.name}}
+                                </a>
+                            </h4>
+                            <span class="my-auto"><b>Thể loại:</b> {{this.type}}</span>
+                        </div>
+                        {{#if this.description}}
+                        <p class="mt-3"><b>Mô tả:</b> {{this.description}}</p>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <h4 class="p-4 mt-4 bg-primary bg-opacity-10 text-center rounded-2">Chưa có File nào</h4>
+                {{/if}}
+            </div>
+
+            <div class="menu-right mt-5 position-relative" style="margin-left: 30px;">
+                <h2 class="fw-bold">Tất cả</h2>
+
+                {{#if fileNew}}
+
+                <ul class="mt-3">
+                    {{#each fileNew}}
+                    <li class="py-3 px-3 mb-4 bg-primary bg-opacity-10 rounded-1 position-relative item-show">
+                        <div class="d-flex" style="justify-content: space-between;">
+                            <h4>
+                                <a target="_blank" href="{{this.url}}/{{this.id}}">
+                                    {{this.name}}
+                                </a>
+                            </h4>
+                            <span class="my-auto"><b>Thể loại:</b> {{this.type}}</span>
+                        </div>
+                        {{#if this.description}}
+                        <p class="mt-3"><b>Mô tả:</b> {{this.description}}</p>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+
+                <h4 class="p-4 mt-4 bg-primary bg-opacity-10 text-center rounded-2">Chưa có File nào</h4>
+
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</main>
+<script type="module" src="./javascript/main.js" defer></script>
+<script type="module" src="./javascript/home.js" defer></script>
